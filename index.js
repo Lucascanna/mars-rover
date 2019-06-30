@@ -89,7 +89,14 @@ const incrementMap = {
   },
 }
 
-function computeFiniteCoordinate(infinteCoordinate, maxCoordinate) {
+function isPositionObstacolated(position, obstacles) {
+  if (!obstacles) {
+    return false
+  }
+  return obstacles.filter(obstacle => obstacle[0]===position[0] && obstacle[1]===position[1]).length > 0
+}
+
+function normalizeCoordinate(infinteCoordinate, maxCoordinate) {
   if (infinteCoordinate <= maxCoordinate && infinteCoordinate >= -maxCoordinate) {
     return infinteCoordinate
   }
@@ -101,18 +108,24 @@ function computeFiniteCoordinate(infinteCoordinate, maxCoordinate) {
   }
 }
 
-function move({ startingPosition, startingDirection, commands, grid }) {
+function move({ startingPosition, startingDirection, commands, grid, obstacles }) {
   if (!grid) {
     grid = [+Infinity, +Infinity]
   }
   if (commands.length === 0) {
     return [startingPosition, startingDirection]
   }
-  const newPosition = []
-  newPosition[0] = computeFiniteCoordinate(startingPosition[0] + incrementMap[startingDirection][commands[0]][0], grid[0])
-  newPosition[1] = computeFiniteCoordinate(startingPosition[1] + incrementMap[startingDirection][commands[0]][1], grid[1])
+  const newUnboundedPosition = []
+  newUnboundedPosition[0] = startingPosition[0] + incrementMap[startingDirection][commands[0]][0]
+  newUnboundedPosition[1] = startingPosition[1] + incrementMap[startingDirection][commands[0]][1]
+  let newPosition = []
+  newPosition[0] = normalizeCoordinate(newUnboundedPosition[0], grid[0])
+  newPosition[1] = normalizeCoordinate(newUnboundedPosition[1], grid[1])
+  if (isPositionObstacolated(newPosition, obstacles)) {
+    newPosition = startingPosition
+  }
   const newDirection = incrementMap[startingDirection][commands[0]].direction
-  return move({ startingPosition: newPosition, startingDirection: newDirection, commands: commands.slice(1), grid })
+  return move({ startingPosition: newPosition, startingDirection: newDirection, commands: commands.slice(1), grid, obstacles })
 }
 
 module.exports = move

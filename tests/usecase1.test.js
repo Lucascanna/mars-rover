@@ -15,7 +15,7 @@ const useCases = [
 for (useCase of useCases) {
   const expectedResults = useCase.solution
   const actualResults = move(useCase)
-  tap.strictSame(expectedResults, actualResults)
+  tap.strictSame(actualResults, expectedResults)
 }
 
 
