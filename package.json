@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Lucascanna/mars-rover#readme",
   "dependencies": {
+    "glob": "^7.1.4",
     "tap": "^14.3.0"
   }
 }

@@ -1,18 +1,8 @@
 const tap = require('tap')
 const move = require('../index')
+const glob = require('glob')
 
-const useCases = [
-  require('./data/usecase4/1.json'),
-  require('./data/usecase4/2.json'),
-  require('./data/usecase4/3.json'),
-  require('./data/usecase4/4.json'),
-  require('./data/usecase4/5.json'),
-  require('./data/usecase4/6.json'),
-  require('./data/usecase4/7.json'),
-  require('./data/usecase4/8.json'),
-  require('./data/usecase4/9.json'),
-  require('./data/usecase4/10.json')
-]
+const useCases = glob.sync('./data/usecase4/*.json', { cwd: 'tests/' }).map(require)
 
 for (useCase of useCases) {
   const expectedResults = useCase.solution
