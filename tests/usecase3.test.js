@@ -1,5 +1,5 @@
 const tap = require('tap')
-const multipleMove = require('../index')
+const move = require('../index')
 
 const useCases = [
   require('./data/usecase3/1.json'),
@@ -11,8 +11,8 @@ const useCases = [
 ]
 
 for (useCase of useCases) {
-  const expectedResults = useCase.map(strategy => strategy.solution)
-  const actualResults = multipleMove(useCase)
+  const expectedResults = useCase.solution
+  const actualResults = move(useCase)
   tap.strictSame(expectedResults, actualResults)
 }
 

@@ -115,8 +115,4 @@ function move({ startingPosition, startingDirection, commands, grid }) {
   return move({ startingPosition: newPosition, startingDirection: newDirection, commands: commands.slice(1), grid })
 }
 
-function multipleMove(strategies) {
-  return strategies.map(move)
-}
-
-module.exports = multipleMove
+module.exports = move
