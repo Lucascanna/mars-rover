@@ -4,7 +4,7 @@
   "description": "kata",
   "main": "index.js",
   "scripts": {
-    "test": "tap -b ./tests/*.test.js"
+    "test": "tap -b ./v2/tests/*.test.js"
   },
   "repository": {
     "type": "git",
