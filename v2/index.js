@@ -121,6 +121,23 @@ function move(startingCoordinates, direction, command) {
   }
 }
 
+function parseCommand(command) {
+  const extractedCommmand = command[0]
+  const times = command.substring(1)
+  if (times === "") {
+    return [extractedCommmand]
+  }
+  return new Array(parseInt(times)).fill(extractedCommmand)
+}
+
+function execute({ startingCoordinates, direction, commands }) {
+  const parsedCommands = commands.reduce((accumulator, currentCommand) => {
+    const parsedCommand = parseCommand(currentCommand)
+    return accumulator.concat(parsedCommand)
+  }, [])
+  return executeCommands({ startingCoordinates, direction, commands: parsedCommands })
+}
+
 function executeCommands({ startingCoordinates, direction, commands }) {
   if (commands.length === 0) {
     return {
@@ -136,4 +153,4 @@ function executeCommands({ startingCoordinates, direction, commands }) {
   })
 }
 
-module.exports = { executeCommands }
+module.exports = { executeCommands: execute }
